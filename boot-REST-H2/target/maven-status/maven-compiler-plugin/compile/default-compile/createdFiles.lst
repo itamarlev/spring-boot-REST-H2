@@ -1,0 +1,6 @@
+com\itamar\spring\boot\rest\repository\ItemRepository.class
+com\itamar\spring\boot\rest\exception\ItemNotFoundException.class
+com\itamar\spring\boot\rest\exception\ItemOutOfStockException.class
+com\itamar\spring\boot\rest\model\Item.class
+com\itamar\spring\boot\rest\Application.class
+com\itamar\spring\boot\rest\controller\AppRESTController.class
