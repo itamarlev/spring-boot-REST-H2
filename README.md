@@ -17,6 +17,14 @@ Item structure:
 
 ### Installing
 
+1. Download to your computer
+2. from the root folder run:
+```
+ mvn clean install
+```
+
+### Running the project
+
 There are two main ways to run the application:
 using java 
 
