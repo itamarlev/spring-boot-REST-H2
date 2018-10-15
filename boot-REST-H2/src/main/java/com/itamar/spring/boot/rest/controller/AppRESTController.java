@@ -55,13 +55,15 @@ public class AppRESTController {
 		return item;
 	}
 
-	@PostMapping(path = "/items", consumes = "application/json", produces = "application/json")
+	@PostMapping
 	Item newItem(@RequestBody Item newItem) {
 		return iRepository.save(newItem);
 	}
 
 	@PutMapping("/items/{number}")
 	Item replaceItem(@RequestBody Item newItem) {
+		if(null == newItem.getAmount())
+			newItem.setAmount(0L);
 		return iRepository.save(newItem);
 	}
 

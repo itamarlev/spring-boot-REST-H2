@@ -1,25 +1,20 @@
 package com.itamar.spring.boot.rest.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Item {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "number") 
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
 	private Long number;
-	
-	@Column(name = "name")
 	private String name;
-	
-	@Column(name = "amount")
 	private Long amount;
-	
-	@Column(name = "inventorycode")
 	private String inventorycode;
 
 	public Long getNumber() {
