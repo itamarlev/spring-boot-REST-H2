@@ -2,11 +2,11 @@
 
 An exercise project exposing API for manipulating Items in an inventory.
 The project is a lightweight project which implements REST API, JPA-data implemented by hibernate
-and a Testing class.
+and a testing class.
 Security - was not implemented.
 
 In order to have initial data in the H2 DB 
-Added a file src/main/resources/data.sql with 4 items.
+added a file src/main/resources/data.sql with 4 items.
 H2 recognize this file and runs the insert commands after startup.
 
 Item structure:
@@ -17,8 +17,9 @@ Item structure:
 
 ### Installing
 
-1. Download to your computer
-2. from the root folder run:
+1. Download the zip to your computer
+2. unzip to a designated folder
+2. from that folder run:
 ```
  mvn clean install
 ```
@@ -92,6 +93,16 @@ http://localhost:8080/items/2/
 
 in the body:
 {
-    "name": "updated item",
+    "number": 2,    
+    "name": "new item",
+    "amount": 43,
+    "inventoryCode": "HF56478"
 }
+```
+DELETE request: 
+delete an items (ex: 2)
+http://localhost:8080/items/{number}
+
+```
+http://localhost:8080/items/2/
 ```
