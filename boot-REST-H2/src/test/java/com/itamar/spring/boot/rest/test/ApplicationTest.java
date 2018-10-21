@@ -24,7 +24,7 @@ import com.itamar.spring.boot.rest.model.Item;
 public class ApplicationTest {
 
 	private TestRestTemplate restTemplate;
-	private static final String BASE_URL = "http://localhost:8080/items";
+	private static final String BASE_URL = "http://localhost:8080/items/";
 
 	@Before
 	public void beforeTest() {
@@ -33,13 +33,13 @@ public class ApplicationTest {
 
 	@Test
 	public void givenResourceUrl_whenSendGetForRequestItem_thenStatusOk() {
-		ResponseEntity<String> response = restTemplate.getForEntity(BASE_URL + "/2", String.class);
+		ResponseEntity<String> response = restTemplate.getForEntity(BASE_URL + "2", String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 	}
 
 	@Test
 	public void givenResourceUrl_whenSendGetForRequestItem_thenBodyCorrect() throws IOException {
-		ResponseEntity<String> response = restTemplate.getForEntity(BASE_URL + "/2", String.class);
+		ResponseEntity<String> response = restTemplate.getForEntity(BASE_URL + "2", String.class);
 
 		final ObjectMapper mapper = new ObjectMapper();
 		final JsonNode root = mapper.readTree(response.getBody());
@@ -50,7 +50,7 @@ public class ApplicationTest {
 	@Test
 	public void givenResourceUrl_whenRetrievingItem_thenCorrect() throws IOException {
 
-		final Item item = restTemplate.getForObject(BASE_URL + "/2", Item.class);
+		final Item item = restTemplate.getForObject(BASE_URL + "2", Item.class);
 		assertThat(item.getName()).isNotNull();
 		assertThat(item.getNumber()).isEqualTo(2L);
 	}
@@ -77,10 +77,10 @@ public class ApplicationTest {
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 		// delete the item
-		restTemplate.delete(BASE_URL + "/11");
+		restTemplate.delete(BASE_URL + "11");
 
 		// check that the item has been removed
-		response = restTemplate.getForEntity(BASE_URL + "/11", String.class);
+		response = restTemplate.getForEntity(BASE_URL + "11", String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
@@ -104,7 +104,7 @@ public class ApplicationTest {
 		assertThat(itemResponse).isNotNull();
 
 		// withdraw items
-		response = restTemplate.postForEntity(BASE_URL + "/" + itemResponse.getNumber() + "/withdraw/3", item,
+		response = restTemplate.postForEntity(BASE_URL + itemResponse.getNumber() + "/withdraw/3", item,
 				Item.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		itemResponse = response.getBody();
@@ -123,7 +123,7 @@ public class ApplicationTest {
 		assertThat(itemResponse).isNotNull();
 
 		// withdraw items
-		response = restTemplate.postForEntity(BASE_URL + "/" + itemResponse.getNumber() + "/withdraw/13", item,
+		response = restTemplate.postForEntity(BASE_URL  + itemResponse.getNumber() + "/withdraw/13", item,
 				Item.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
@@ -138,7 +138,7 @@ public class ApplicationTest {
 		assertThat(itemResponse).isNotNull();
 
 		// deposit items
-		response = restTemplate.postForEntity(BASE_URL + "/" + itemResponse.getNumber() + "/deposit/13", item,
+		response = restTemplate.postForEntity(BASE_URL  + itemResponse.getNumber() + "/deposit/13", item,
 				Item.class);
 
 		// check that the items were added to the amount
@@ -149,8 +149,8 @@ public class ApplicationTest {
 	@Test
 	public void givenItemService_whenPutChangeRequest_thenTheItemChnges() {
 		final Item item = new Item(1L, "updated Item", 10L, "BF75543");
-		restTemplate.put(BASE_URL + "/1", item);
-		final Item itemResponse = restTemplate.getForObject(BASE_URL + "/1", Item.class);
+		restTemplate.put(BASE_URL + "1", item);
+		final Item itemResponse = restTemplate.getForObject(BASE_URL + "1", Item.class);
 		assertThat(item.getName()).isEqualTo(itemResponse.getName());
 		assertThat(item.getAmount()).isEqualTo(itemResponse.getAmount());
 		assertThat(item.getInventoryCode()).isEqualTo(itemResponse.getInventoryCode());
@@ -159,8 +159,8 @@ public class ApplicationTest {
 	@Test
 	public void givenItemService_whenPutChangeRequest_withoutAmmount_thenTheItemChngesAndAmountItZero() {
 		final Item item = new Item(1L, "updated Item with null amount", null, "BF75543");
-		restTemplate.put(BASE_URL + "/1", item);
-		final Item itemResponse = restTemplate.getForObject(BASE_URL + "/1", Item.class);
+		restTemplate.put(BASE_URL + "1", item);
+		final Item itemResponse = restTemplate.getForObject(BASE_URL + "1", Item.class);
 		assertThat(item.getName()).isEqualTo(itemResponse.getName());
 		assertThat(itemResponse.getAmount()).isEqualTo(0L);
 		assertThat(item.getInventoryCode()).isEqualTo(itemResponse.getInventoryCode());
