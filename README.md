@@ -30,7 +30,7 @@ There are two main ways to run the application:
 using java 
 
 ```
- java -jar .\target\boot-rest-h2-0.0.1-SNAPSHOT.jar
+ java -jar .\boot-rest-h2-1.0.0.jar
 ```
 using docker
 first login to your docker hub account. 
@@ -44,65 +44,10 @@ docker pull itamarlev/rest-h2:master
 docker run -p 8080:8080 rest-h2
 ```
 
-## Running the tests
-In order to the the system it's best to use REST client as Postman.
-
-GET requests:
-
-get all the Items in the DB.
+## SWAGGER Api catalogue 
+when the application is running go to the following URL
+to test the REST calls using swagger
 ```
-http://localhost:8080/items
-```
-get a specific object by its number ID. (ex:2)
-http://localhost:8080/items/{number}
-```
-http://localhost:8080/items/2
+http://localhost:8080/swagger-ui.html
 ```
 
-POST requests: (not idempotent)
-
-Deposit a number of items (ex: 2;3)
-http://localhost:8080/items/{number}/withdraw/{amount}
-```
-http://localhost:8080/items/2/withdraw/3
-```
-
-Withdraw a number of items (ex: 2;3)
-http://localhost:8080/items/{number}/withdraw/{amount}
-```
-http://localhost:8080/items/2/deposit/3
-```
-
-Add a new Item
-http://localhost:8080/items/
-```
-http://localhost:8080/items/
-
-in the body:
-{
-    "name": "new item",
-    "amount": 43,
-    "inventoryCode": "HF56478"
-}
-```
-PUT requests: (idempotent)
-update an items (ex: 2;3)
-http://localhost:8080/items/{number}
-```
-http://localhost:8080/items/2/
-
-in the body:
-{
-    "number": 2,    
-    "name": "new item",
-    "amount": 43,
-    "inventoryCode": "HF56478"
-}
-```
-DELETE request: 
-delete an items (ex: 2)
-http://localhost:8080/items/{number}
-
-```
-http://localhost:8080/items/2/
-```
