@@ -3,4 +3,5 @@ C:\Users\ilev\git\boot-REST-H2\boot-REST-H2\src\main\java\com\itamar\spring\boot
 C:\Users\ilev\git\boot-REST-H2\boot-REST-H2\src\main\java\com\itamar\spring\boot\rest\Application.java
 C:\Users\ilev\git\boot-REST-H2\boot-REST-H2\src\main\java\com\itamar\spring\boot\rest\repository\ItemRepository.java
 C:\Users\ilev\git\boot-REST-H2\boot-REST-H2\src\main\java\com\itamar\spring\boot\rest\exception\ItemNotFoundException.java
+C:\Users\ilev\git\boot-REST-H2\boot-REST-H2\src\main\java\com\itamar\spring\boot\rest\SwaggerConfig.java
 C:\Users\ilev\git\boot-REST-H2\boot-REST-H2\src\main\java\com\itamar\spring\boot\rest\controller\AppRESTController.java

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itamar.spring.boot.rest.exception.ItemNotFoundException;
@@ -16,7 +17,14 @@ import com.itamar.spring.boot.rest.exception.ItemOutOfStockException;
 import com.itamar.spring.boot.rest.model.Item;
 import com.itamar.spring.boot.rest.repository.ItemRepository;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
+@RequestMapping("/items")
+@Api(value="Item Resources")
 public class AppRESTController {
 
 	@Autowired
@@ -26,17 +34,31 @@ public class AppRESTController {
 		this.iRepository = repository;
 	}
 
-	@GetMapping("/items")
+	@ApiOperation(value = "returns all the available items")
+	@GetMapping("/")
 	List<Item> all() {
 		return iRepository.findAll();
 	}
 
-	@GetMapping("/items/{number}")
+	@ApiOperation(value = "returns a specific item")
+	@GetMapping("/{number}")
 	Item find(@PathVariable Long number) {
 		return iRepository.findById(number).orElseThrow(() -> new ItemNotFoundException(number));
 	}
 
-	@PostMapping("/items/{number}/withdraw/{amount}")
+	@ApiOperation(value = "create a new item")	
+	@PostMapping
+	Item newItem(@RequestBody Item newItem) {
+		return iRepository.save(newItem);
+	}
+
+	@ApiOperation(value = "withdraw specific amount from an item")
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 404, message = "not enough items to withdraw the amount given")
+			}
+			)
+	@PostMapping("/{number}/withdraw/{amount}")
 	Item withdraw(@PathVariable Long number, @PathVariable Long amount) {
 		Item item = find(number);
 		if (item.getAmount() > amount)
@@ -47,7 +69,13 @@ public class AppRESTController {
 		return item;
 	}
 
-	@PostMapping("/items/{number}/deposit/{amount}")
+	@ApiOperation(value = "deposit specific amount to an item")
+	@ApiResponses(
+			value = {
+					@ApiResponse(code = 200, message = "the amount has been added as requested")
+			}
+			)	
+	@PostMapping("/{number}/deposit/{amount}")
 	Item deposit(@PathVariable Long number, @PathVariable Long amount) {
 		Item item = find(number);
 		item.setAmount(item.getAmount() + amount);
@@ -55,19 +83,16 @@ public class AppRESTController {
 		return item;
 	}
 
-	@PostMapping
-	Item newItem(@RequestBody Item newItem) {
-		return iRepository.save(newItem);
-	}
-
-	@PutMapping("/items/{number}")
+	@ApiOperation(value = "replace an item with new data")
+	@PutMapping("/{number}")
 	Item replaceItem(@RequestBody Item newItem) {
-		if(null == newItem.getAmount())
+		if (null == newItem.getAmount())
 			newItem.setAmount(0L);
 		return iRepository.save(newItem);
 	}
 
-	@DeleteMapping("/items/{number}")
+	@ApiOperation(value = "delete an item")	
+	@DeleteMapping("/{number}")
 	void deleteItem(@PathVariable Long number) {
 		iRepository.deleteById(number);
 	}

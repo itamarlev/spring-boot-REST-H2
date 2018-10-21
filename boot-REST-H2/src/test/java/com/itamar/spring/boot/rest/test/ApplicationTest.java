@@ -13,13 +13,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itamar.spring.boot.rest.Application;
-import com.itamar.spring.boot.rest.exception.ItemOutOfStockException;
 import com.itamar.spring.boot.rest.model.Item;
 
 @RunWith(SpringRunner.class)
@@ -71,21 +68,21 @@ public class ApplicationTest {
 		assertThat(item).isNotNull();
 		assertThat(item.getName()).isEqualTo("bar");
 	}
-	
+
 	@Test
 	public void givenItemService_whenDelete_thenItemIsRemoved() {
-		//add an item to remove
+		// add an item to remove
 		final Item item = new Item(11L, "Item to be deleted", 10L, "BF89655");
 		ResponseEntity<String> response = restTemplate.postForEntity(BASE_URL, item, String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-		//delete the item 
+		// delete the item
 		restTemplate.delete(BASE_URL + "/11");
-		
-		//check that the item has been removed
+
+		// check that the item has been removed
 		response = restTemplate.getForEntity(BASE_URL + "/11", String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-	}	
+	}
 
 	@Test
 	public void givenItemService_whenPostResource_thenResourceIsCreated() {
@@ -148,24 +145,24 @@ public class ApplicationTest {
 		itemResponse = response.getBody();
 		assertThat(itemResponse.getAmount()).isEqualTo(23L);
 	}
-	
+
 	@Test
 	public void givenItemService_whenPutChangeRequest_thenTheItemChnges() {
 		final Item item = new Item(1L, "updated Item", 10L, "BF75543");
 		restTemplate.put(BASE_URL + "/1", item);
-		final Item itemResponse  = restTemplate.getForObject(BASE_URL + "/1", Item.class);
+		final Item itemResponse = restTemplate.getForObject(BASE_URL + "/1", Item.class);
 		assertThat(item.getName()).isEqualTo(itemResponse.getName());
 		assertThat(item.getAmount()).isEqualTo(itemResponse.getAmount());
 		assertThat(item.getInventoryCode()).isEqualTo(itemResponse.getInventoryCode());
 	}
-	
+
 	@Test
 	public void givenItemService_whenPutChangeRequest_withoutAmmount_thenTheItemChngesAndAmountItZero() {
 		final Item item = new Item(1L, "updated Item with null amount", null, "BF75543");
 		restTemplate.put(BASE_URL + "/1", item);
-		final Item itemResponse  = restTemplate.getForObject(BASE_URL + "/1", Item.class);
+		final Item itemResponse = restTemplate.getForObject(BASE_URL + "/1", Item.class);
 		assertThat(item.getName()).isEqualTo(itemResponse.getName());
 		assertThat(itemResponse.getAmount()).isEqualTo(0L);
 		assertThat(item.getInventoryCode()).isEqualTo(itemResponse.getInventoryCode());
-	}	
+	}
 }

@@ -6,15 +6,24 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class Item {
 
 	@Id
-	@GeneratedValue(generator="increment")
-	@GenericGenerator(name="increment", strategy = "increment")
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "increment")
+	@ApiModelProperty(notes = "ID number of the item")	
 	private Long number;
+	
+	@ApiModelProperty(notes = "Item name")
 	private String name;
+	
+	@ApiModelProperty(notes = "Amount of Items in stock")	
 	private Long amount;
+
+	@ApiModelProperty(notes = "Inventory code")
 	private String inventorycode;
 
 	public Long getNumber() {
