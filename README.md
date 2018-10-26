@@ -15,6 +15,12 @@ Item structure:
 	private Long amount;
 	private String inventorycode;
 
+# Couchbase
+Another REST API to get documents from couchbase. 
+Provisioning: download couchbase 5.1.1 community edition from: https://www.couchbase.com/downloads
+install couchbase with beer-sample sample bucket
+add User <b>itamar</b> password <b>abc12345</b> with access to <b>beer-sample</b>
+
 ### Installing
 
 1. Download the zip to your computer
@@ -38,7 +44,7 @@ first login to your docker hub account.
 docker login --username=<your user name>
 ```
 
-then pull the docker image and run it
+then pull the docker image and run it (couchbase not in the docker image as of yet)
 ```
 docker pull itamarlev/rest-h2:master
 docker run -p 8080:8080 rest-h2
@@ -48,6 +54,6 @@ docker run -p 8080:8080 rest-h2
 when the application is running go to the following URL
 to test the REST calls using swagger
 ```
-http://localhost:8080/swagger-ui.html
+http://localhost:8085/swagger-ui.html
 ```
 
